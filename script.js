@@ -41,3 +41,17 @@ function closeModalArquivo() {
     var modal = document.getElementById('ArquivoModal');
     modal.classList.add('hidden');
 };
+
+
+// Captura o elemento no qual você deseja manipular o botão direito
+const elemento = document.body;
+
+// Função para executar quando o evento contextmenu ocorrer
+function manipularBotaoDireito(event) {
+  event.preventDefault(); // Evita o menu de contexto padrão
+  alert('Ação diferente do botão direito foi executada!');
+  // Aqui você pode adicionar o código para a ação que deseja realizar
+}
+
+// Adiciona o ouvinte de evento ao elemento
+elemento.addEventListener('contextmenu', manipularBotaoDireito);

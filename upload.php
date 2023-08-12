@@ -11,54 +11,63 @@ if (isset($_POST["idRazaoArquivo"])) {
 
         $popupArquivo = "";
         if ($result->num_rows > 0) {
+
             $popupArquivo .= "
             <div id='ArquivoModal' class='fixed w-full h-full inset-0 z-50 items-center justify-center bg-gray-500 bg-opacity-100 overflow-auto'>
-                <div class='mt-5 mb-5 mr-5 ml-5 rounded-lg bg-white p-6 '>    
+                <div class='mt-5 mb-5 mr-5 ml-5 rounded-lg bg-white px-5 pb-8 pt-2 '>    
                     <div class='flex justify-between'>
-                        <h2 class='text-center text-2xl font-bold'>Nome da Prefeitura</h2>
+                        <h2 class='text-center text-2xl font-bold'>Nome </h2>
                         <button onclick='closeModalArquivo()' class='w-9 rounded bg-red-500 py-2 text-sm font-bold text-white hover:bg-red-700' type='button'>X</button>
                     </div>
-                    <div class='grid grid-cols-5 gap-4 mt-6'>";
+                    <div class='grid grid-cols-5 gap-4 mt-6 '>";
 
             while ($row = $result->fetch_assoc()) {
                 $nomeArquivo = $row['nome_arquivo'];
                 $path = $row['path'];
                 $extensao = pathinfo($path, PATHINFO_EXTENSION);
                 $popupArquivo .= "
-                    <div class='mx-3 mt-6 flex-col self-start rounded-lg bg-slate-200 h-52'>
-                        <a class='mb-5' target='_blank'href='$path'>
+                    <div class='mx-3 mt-6 flex-col self-start rounded-lg bg-slate-200 h-52 w-auto'>
+                        <a target='_blank'href='$path'>
                             ";
                             if (strtolower($extensao) === 'pdf') {
                                 $popupArquivo .= "
                                                 <div class='flex py-2 px-2 mt-2'>
-                                                    <img class='mx-3' src='./img-auxiliar/pdfIcon.png' alt='icon pdf'><h5 class='text-center text-xl font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
+                                                    <img class='mx-3' src='./img-auxiliar/pdfIcon.png' alt='icon pdf'><h5 class='text-center text-sm font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
                                                 </div>
                                                 <div class='w-full h-full overflow-hidden'>
-                                                   <iframe class='object-none h-5/6 w-full p-6 object-fill' scrolling='no' src='$path' alt='$nomeArquivo'></iframe>
+                                                   <iframe class='object-none h-5/6 w-full px-5 pb-8 pt-2 object-fill' scrolling='no' src='$path' alt='$nomeArquivo'></iframe>
                                                 </div>";
                             } else if (in_array(strtolower($extensao), ['png', 'jpeg', 'jpg'])) {
                                 $popupArquivo .= "
                                                 <div class='flex py-2 px-2 mt-2'>
-                                                    <img class='mx-3 ' src='./img-auxiliar/imgIcon.png' alt='icon img'><h5 class='text-center text-xl font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
+                                                    <img class='mx-3 ' src='./img-auxiliar/imgIcon.png' alt='icon img'><h5 class='text-center text-sm font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
                                                 </div>
                                                 <div class='w-full h-full overflow-hidden'>
-                                                    <img class='h-5/6 w-auto p-6 mx-auto' src='$path' alt='$nomeArquivo' />
+                                                    <img class='h-5/6 w-auto px-5 pb-8 pt-2 mx-auto' src='$path' alt='$nomeArquivo' />
                                                 </div>";
                             }elseif (strtolower($extensao) === 'pptx'){
                                 $popupArquivo .= "
                                                 <div class='flex py-2 px-2 mt-2'>
-                                                    <img class='mx-3' src='./img-auxiliar/powerpointIcon.png' alt='icon powerpoint'><h5 class='text-center text-xl font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
+                                                    <img class='mx-3' src='./img-auxiliar/powerpointIcon.png' alt='icon powerpoint'><h5 class='text-center text-sm  font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
                                                 </div>
                                                 <div class='w-full h-full overflow-hidden'>
-                                                    <img class='h-5/6 w-auto p-6 mx-auto' src='./img-auxiliar/powerpoint.jpg' alt='powerpoint' />
+                                                    <img class='h-5/6 w-auto px-5 pb-8 pt-2 mx-auto' src='./img-auxiliar/powerpoint.jpg' alt='powerpoint' />
                                                 </div>";
+                            }elseif (strtolower($extensao) === 'docx'){
+                            $popupArquivo .= "
+                                            <div class='flex py-2 px-2 mt-2'>
+                                                <img class='mx-3' src='./img-auxiliar/wordIcon.png' alt='icon powerpoint'><h5 class='text-center text-sm font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
+                                            </div>
+                                            <div class='w-full h-full overflow-hidden'>
+                                                <img class='h-5/6 w-auto px-5 pb-8 pt-2 mx-auto' src='./img-auxiliar/word.png' alt='powerpoint' />
+                                            </div>";
                             }elseif (strtolower($extensao) === 'xlsx'){
                                 $popupArquivo .= "
                                                 <div class='flex py-2 px-2 mt-2'>
-                                                    <img class='mx-3' src='./img-auxiliar/exelIcon.png' alt='icon exel'><h5 class='text-center text-xl font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
+                                                    <img class='mx-3' src='./img-auxiliar/exelIcon.png' alt='icon exel'><h5 class='text-center text-sm  font-medium leading-tight text-neutral-800 truncate'>$nomeArquivo</h5>
                                                 </div>
                                                 <div class='w-full h-full overflow-hidden'>
-                                                    <img class='h-5/6 w-auto p-6 mx-auto' src='./img-auxiliar/exel.png' alt='exel' />
+                                                    <img class='h-5/6 w-auto px-5 pb-8 pt-2 mx-auto' src='./img-auxiliar/exel.png' alt='exel' />
                                                 </div>";
                             }
                             $popupArquivo .= "</a>
